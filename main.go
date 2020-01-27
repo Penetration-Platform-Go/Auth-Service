@@ -7,7 +7,7 @@ import (
 	"os"
 
 	grpcService "github.com/Penetration-Platform-Go/Auth-Service/grpc"
-	"github.com/Penetration-Platform-Go/User-Service/route"
+	"github.com/Penetration-Platform-Go/Auth-Service/route"
 	auth "github.com/Penetration-Platform-Go/gRPC-Files/Auth-Service"
 	flag "github.com/spf13/pflag"
 	"google.golang.org/grpc"
@@ -16,7 +16,7 @@ import (
 func main() {
 	var PORT = os.Getenv("PORT")
 	if len(PORT) == 0 {
-		PORT = "8080"
+		PORT = "8001"
 	}
 	var port = flag.StringP("port", "p", PORT, "Define the port where service runs")
 	var GRPCPORT = os.Getenv("GRPC_PORT")
@@ -33,7 +33,7 @@ func main() {
 		}
 		log.Printf("Listening on: %s", *grpcPort)
 		gs := grpc.NewServer()
-		auth.(gs, &grpcService.UserService{})
+		auth.RegisterAuthServer(gs, &grpcService.AuthService{})
 		gs.Serve(lis)
 	}()
 
