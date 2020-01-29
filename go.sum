@@ -1,9 +1,9 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200126144021-3b18f53e1c08 h1:za+CDLJOu/K32VXSiQu+CGVYDJezKn8aVT4tVrgVXcU=
-github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200126144021-3b18f53e1c08/go.mod h1:LWVtx28pdhiqovQn2Y6iEL+7rkqLl8LIzDBHlM7qcdU=
 github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200127063150-cfac9283e7c1 h1:4UWXjczbWTZZx37QWIkHMou+bmysNuWP0PSNAhKhJ9s=
 github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200127063150-cfac9283e7c1/go.mod h1:LWVtx28pdhiqovQn2Y6iEL+7rkqLl8LIzDBHlM7qcdU=
+github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200129091809-77c15b11ad8b h1:ZjfY+Dr8/RW1cx3G4VghwdZR6NtQ8+3Mz4Wb+hgc6L0=
+github.com/Penetration-Platform-Go/gRPC-Files v0.0.0-20200129091809-77c15b11ad8b/go.mod h1:LWVtx28pdhiqovQn2Y6iEL+7rkqLl8LIzDBHlM7qcdU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

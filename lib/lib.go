@@ -7,60 +7,29 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // JWTKey defines the token key
 var JWTKey = "chrisju"
 
-// HashPassword return hash of password
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes), err
-}
-
 // GenerateJWT generate token for user
-func GenerateJWT(username string, isValid bool) (string, error) {
+func GenerateJWT(username string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 		"sub": username,
-		"iat": time.Now().Unix(),
-		//"jti":   GenerateUUID(),
-		"valid": isValid,
 	})
 
 	return token.SignedString([]byte(JWTKey))
 }
 
-// GenerateUUID generate uuid
-// TODO: return error
-// func GenerateUUID() string {
-// 	id, err := uuid.NewV1()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	return id.String()
-// }
-
-// CompasePassword compare raw password with hashed one
-func CompasePassword(raw, hashed string) bool {
-	return bcrypt.CompareHashAndPassword([]byte(hashed), []byte(raw)) == nil
-}
-
 // CheckJWT check whether the jwt is valid and if it is in the invalid database
-func CheckJWT(jwtString string) (bool, error) {
-	isValid, err := ValidateToken(jwtString)
-	if err != nil {
-		return false, err
-	}
-	if !isValid {
-		return false, nil
-	}
-	return true, nil
+func CheckJWT(jwtString string) string {
+
+	return validateToken(jwtString)
 }
 
-// ValidateToken check the format of token
-func ValidateToken(jwtString string) (bool, error) {
+// validateToken check the format of token
+func validateToken(jwtString string) string {
 	// validate jwt
 	token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -70,24 +39,22 @@ func ValidateToken(jwtString string) (bool, error) {
 	})
 	if err != nil {
 		fmt.Println(err)
-		return false, err
+		return ""
 	}
 
-	// parse time from jwt
-	var exp int64
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		expired := claims["exp"]
 		if expired == nil {
-			return false, nil
+			return ""
 		}
-		exp = int64(expired.(float64))
+		exp := int64(expired.(float64))
 		if time.Now().Unix() > exp {
-			return false, nil
+			return ""
 		}
-	} else {
-		return false, nil
+		return claims["sub"].(string)
 	}
-	return true, nil
+	return ""
+
 }
 
 // StringToMd5 Transfer string to Md5
