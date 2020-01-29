@@ -31,7 +31,7 @@ func LogInHandler(ctx *gin.Context) {
 		Username: ctx.PostForm("username"),
 	})
 	if err != nil {
-		ctx.String(400, "Username does not exist")
+		ctx.String(400, err.Error())
 	} else {
 		ctx.JSON(200, userInformation)
 	}
