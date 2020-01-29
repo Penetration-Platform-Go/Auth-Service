@@ -1,7 +1,9 @@
 package lib
 
 import (
+	"crypto/md5"
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -86,4 +88,19 @@ func ValidateToken(jwtString string) (bool, error) {
 		return false, nil
 	}
 	return true, nil
+}
+
+// StringToMd5 Transfer string to Md5
+func StringToMd5(str string) string {
+	data := []byte(str)
+	has := md5.Sum(data)
+	md5str := fmt.Sprintf("%x", has)
+	return md5str
+}
+
+// VerifyUsernameFormat method
+func VerifyUsernameFormat(username string) bool {
+	pattern := `^[a-z0-9_-]{6,20}$`
+	reg := regexp.MustCompile(pattern)
+	return reg.MatchString(username)
 }

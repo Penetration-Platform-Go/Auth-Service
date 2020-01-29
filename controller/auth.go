@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 
+	"github.com/Penetration-Platform-Go/Auth-Service/lib"
 	user "github.com/Penetration-Platform-Go/gRPC-Files/User-Service"
 	"github.com/gin-gonic/gin"
 )
@@ -25,13 +26,22 @@ type ValidationResponse struct {
 
 // LogInHandler handler login event
 func LogInHandler(ctx *gin.Context) {
+
+	if !lib.VerifyUsernameFormat(ctx.PostForm("username")) {
+		ctx.Status(406)
+		return
+	}
+
 	// valid user password or email from user service
 	uclient := user.NewUserClient(UserGrpcClient)
 	userInformation, err := uclient.GetInformationByUsername(context.Background(), &user.Username{
 		Username: ctx.PostForm("username"),
 	})
+
 	if err != nil {
-		ctx.String(400, err.Error())
+		ctx.Status(400)
+	} else if userInformation.Password != lib.StringToMd5(ctx.PostForm("password")) {
+		ctx.Status(400)
 	} else {
 		ctx.JSON(200, userInformation)
 	}
