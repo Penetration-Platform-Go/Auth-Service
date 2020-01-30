@@ -1,0 +1,67 @@
+---
+swagger: "2.0"
+info:
+  description: "Auth Service"
+  version: "1.0.0"
+  title: "认证服务"
+  termsOfService: "https://github.com/Penetration-Platform-Go"
+  contact:
+    email: "chris-ju@qq.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "Auth"
+  description: "Operations about Auth"
+schemes:
+- "http"
+paths:
+  /auth:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User Login Auth"
+        required: true
+        schema:
+          $ref: "#/definitions/UserLogin"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "Successful/Error"
+          schema:
+            $ref: "#/definitions/User"
+definitions:
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      nickname:
+        type: "string"
+      password:
+        type: "string"
+      email:
+        type: "string"
+      photo:
+        type: "string"
+    example:
+      password: "password"
+      nickname: "nickname"
+      photo: "photo"
+      email: "email"
+      username: "username"
+  UserLogin:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
