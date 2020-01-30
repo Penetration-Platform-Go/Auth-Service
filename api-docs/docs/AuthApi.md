@@ -1,15 +1,15 @@
-# \UserApi
+# \AuthApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateUser**](UserApi.md#CreateUser) | **Post** /auth | Create user
+[**QueryUser**](AuthApi.md#QueryUser) | **Post** /auth | LogIn
 
 
-# **CreateUser**
-> User CreateUser(ctx, body)
-Create user
+# **QueryUser**
+> User QueryUser(ctx, body)
+LogIn
 
 This can only be done by the logged in user.
 

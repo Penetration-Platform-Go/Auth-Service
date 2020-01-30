@@ -11,7 +11,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 tags:
-- name: "Auth"
+- name: "auth"
   description: "Operations about Auth"
 schemes:
 - "http"
@@ -19,10 +19,10 @@ paths:
   /auth:
     post:
       tags:
-      - "user"
-      summary: "Create user"
+      - "auth"
+      summary: "LogIn"
       description: "This can only be done by the logged in user."
-      operationId: "createUser"
+      operationId: "queryUser"
       produces:
       - "application/json"
       parameters:

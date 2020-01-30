@@ -21,7 +21,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*UserApi* | [**CreateUser**](docs/UserApi.md#createuser) | **Post** /auth | Create user
+*AuthApi* | [**QueryUser**](docs/AuthApi.md#queryuser) | **Post** /auth | LogIn
 
 
 ## Documentation For Models
