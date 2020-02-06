@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"errors"
 
 	"github.com/Penetration-Platform-Go/Auth-Service/lib"
 	auth "github.com/Penetration-Platform-Go/gRPC-Files/Auth-Service"
@@ -12,13 +11,9 @@ import (
 type AuthService struct {
 }
 
-// GetUsernameByToken returns token key
+// GetUsernameByToken returns username
 func (u *AuthService) GetUsernameByToken(ctx context.Context, in *auth.Token) (*auth.Username, error) {
-	err := errors.New("Token invalid")
-	username := lib.CheckJWT(in.JWT)
-	if username != "" {
-		err = nil
-	}
+	username, err := lib.CheckJWT(in.JWT)
 	return &auth.Username{
 		Username: username,
 	}, err

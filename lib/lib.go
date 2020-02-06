@@ -2,6 +2,7 @@ package lib
 
 import (
 	"crypto/md5"
+	"errors"
 	"fmt"
 	"regexp"
 	"time"
@@ -23,13 +24,13 @@ func GenerateJWT(username string) (string, error) {
 }
 
 // CheckJWT check whether the jwt is valid and if it is in the invalid database
-func CheckJWT(jwtString string) string {
+func CheckJWT(jwtString string) (string, error) {
 
 	return validateToken(jwtString)
 }
 
 // validateToken check the format of token
-func validateToken(jwtString string) string {
+func validateToken(jwtString string) (string, error) {
 	// validate jwt
 	token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -38,22 +39,21 @@ func validateToken(jwtString string) string {
 		return []byte(JWTKey), nil
 	})
 	if err != nil {
-		fmt.Println(err)
-		return ""
+		return "", err
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		expired := claims["exp"]
 		if expired == nil {
-			return ""
+			return "", err
 		}
 		exp := int64(expired.(float64))
 		if time.Now().Unix() > exp {
-			return ""
+			return "", errors.New("Timeout")
 		}
-		return claims["sub"].(string)
+		return claims["sub"].(string), nil
 	}
-	return ""
+	return "", errors.New("Token invalid")
 
 }
 
